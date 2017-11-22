@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DemoBootstrap</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .col-md-12 {
+            margin: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <form class="form-inline col-offset-1" role="form">
+                <div class="form-group">
+                    <label class="sr-only" for="id11"></label>
+                    <input type="number" class="form-control" id="id11"
+                           placeholder="请输入ID">
+                </div>
+                <button type="button" class="btn btn-primary" id="find1">查找</button>
+                <button type="button" class="btn btn-danger" id="modal-705923" data-target="#modal-container-705923"
+                        data-toggle="modal">增加
+                </button>
+            </form>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        名字
+                    </th>
+                    <th>
+                        密码
+                    </th>
+                    <th>
+                        修改
+                    </th>
+                    <th>
+                        删除
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <div class=" col-md-offset-3">
+                <ul class="pagination" id="ul2">
+
+                </ul>
+            </div>
+            <div class="row clearfix">
+                <!-- 模态框1-->
+                <div class="col-md-12 column">
+                    <div class="modal fade" id="modal-container-705923" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        增加
+                                    </h4>
+                                </div>
+                                <form class="form-horizontal" role="form" action="/restful_Demo/stu/save.do"
+                                      method="post">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="name1" class="col-sm-2 control-label">姓名</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="name1"
+                                                       placeholder="请输入姓名" name="sname">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd1" class="col-sm-2 control-label">密码</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="pwd1"
+                                                       placeholder="请输入密码" name="password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="submit" class="btn btn-primary">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--模态框2 -->
+
+
+                    <div class="modal fade" id="modal-container-4257" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabe2">
+                                        修改
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label for="id2" class="col-sm-2 control-label">ID</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="id2"
+                                                       placeholder="请输入ID" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name2" class="col-sm-2 control-label">姓名</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="name2"
+                                                       placeholder="请输入姓名" name="sname">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd2" class="col-sm-2 control-label">密码</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="pwd2"
+                                                       placeholder="请输入密码" name="password">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary" id="update1">更新</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap js  -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Echarts.js-->
+<!-- <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script> -->
+<script>
+    var t = 0;
+    //当前页
+    var curr = 1;
+    //总页数
+    var totals = 1;
+    //分页显示
+    function findByPage(c) {
+        curr = c;
+        $.ajax({
+            type: "GET",
+            url: "/restful_Demo/stu/findByPage.do/" + c,
+            async: true,
+            cache: false,
+            contentType: "application/json",
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                $('tbody').empty();
+
+                for (var i = 0; i < data["list"].length; i++) {
+//                    t = data[i]["sid"];
+//                    n.sname = data[i]["sname"];
+//                    n.password = data[i]["password"];
+                    $('tbody').append("<tr><td>" + data["list"][i]["sid"] + "</td><td>" + data["list"][i]["sname"] + "</td><td>" + data["list"][i]["password"] + "</td><td> <a id='modal-4257' href='#modal-container-4257' role='button' class='btn r1' data-toggle='modal'>修改</a></td><td><a class='btn r2'>删除</a></td></tr>");
+                    $(".r1").click(fun1);
+                    $(".r2").click(fun2);
+                }
+                //显示分页信息
+                $("#ul2").empty();
+                var total = data["totalPage"];
+                totals = total;
+                $("#ul2")
+                        .append(
+                                "<li class='r3'><a class='btn'><span class='glyphicon glyphicon-fast-backward'></span></a></li>");
+                $("#ul2")
+                        .append(
+                                "<li class='r3'><a class='btn'><span class='glyphicon glyphicon-chevron-left'></span></a></li>");
+                for (var i = 1; i <= total; i++) {
+                    if (i == c) {
+                        $("#ul2").append(
+                                "<li><a class='btn disabled'>"
+                                + i
+                                + "</a></li>");
+                    } else {
+                        $("#ul2").append(
+                                "<li class='r3'><a class='btn'>"
+                                + i
+                                + "</a></li>");
+                    }
+                }
+                $("#ul2")
+                        .append(
+                                "<li class='r3'><a class='btn'><span class='glyphicon glyphicon-chevron-right'></span></a></li>");
+                $("#ul2")
+                        .append(
+                                "<li class='r3'><a class='btn'><span class='glyphicon glyphicon-fast-forward'></span></a></li>");
+                $("#ul2").append(
+                        "<li><span>共"
+                        + total
+                        + "页</span></li>");
+                $(".r3").click(fun3);
+
+            }
+        });
+    }
+
+    //页面加载第一页
+    $(document).ready(findByPage(1));
+
+    //更新
+    function fun1() {
+        //console.log(t);
+        t = $($(this).parent().parent().children("td").get(0)).html();
+        $('#sid2').val($($(this).parent().parent().children("td").get(0)).html());
+        $('#name2').val($($(this).parent().parent().children("td").get(1)).html());
+        $('#pwd2').val($($(this).parent().parent().children("td").get(2)).html());
+    }
+
+    //删除
+    function fun2() {
+        t = $($(this).parent().parent().children("td").get(0)).html();
+        var _this=this;
+        var b = confirm("确定删除吗？");
+        if (b) {
+            $.ajax({
+                type: "DELETE",
+                url: "/restful_Demo/stu/del.do/" + t,
+                async: true,
+                cache: false,
+                contentType: "application/json",
+                success: function (data1) {
+                    var res = JSON.stringify(data1);
+                    if (res == '"success"') {
+                        alert("删除成功");
+                    } else {
+                        alert("删除失败");
+                    }
+                    window.location.reload();
+                }
+            });
+        }
+    }
+    //更新提交
+    $('#update1').click(function () {
+        $.ajax({
+            type: "PUT",
+            url: "/restful_Demo/stu/update.do/" + t,
+            async: true,
+            cache: false,
+            data: JSON.stringify({
+                sname: $('#name2').val(),
+                password: $('#pwd2').val()
+            }),
+            contentType: "application/json",
+            success: function (data1) {
+                var res = JSON.stringify(data1);
+                if (res == '"success"') {
+                    alert("更新成功");
+                } else {
+                    alert("更新失败");
+                }
+                window.location.reload();
+            }
+        });
+    });
+    //按ID查
+    $('#find1').click(function () {
+        var temp = $('#id11').val();
+        if (temp == '' || temp == null) {
+            temp = 0;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/restful_Demo/stu/findById.do/" + temp,
+            async: true,
+            cache: false,
+            success: function (data2) {
+                $('tbody').empty();
+                console.log(JSON.stringify(data2));
+                if (data2 == null || data2 == '') {
+
+                } else {
+//                    t = data2[i]["sid"];
+//                    n.sname = data2[i]["sname"];
+//                    n.password = data2[i]["password"];
+                    $('tbody').append("<tr><td>" + data2["sid"] + "</td><td>" + data2["sname"] + "</td><td>" + data2["password"] + "</td><td> <a id='modal-4257' href='#modal-container-4257' role='button' class='btn r1' data-toggle='modal'>修改</a></td><td><a class='btn r2'>删除</a></td></tr>");
+                    $(".r1").click(fun1);
+                    $(".r2").click(fun2);
+                }
+
+            }
+        });
+    });
+
+    //当前点击第几页
+    function fun3() {
+        //获取索引
+        var index = $(this).index();
+        console.log("索引号："+index);
+        //整个分页信息的按钮数
+        var i = totals + 4;
+        console.log("总共按钮："+i);
+        if (index > 1 && index < i - 2) {
+            curr = index - 1;
+        }
+        console.log("当前页："+curr);
+        if (index == 0) {
+            curr = 1;
+        }
+        if (index == 1) {
+            curr = curr - 1;
+        }
+        if (index == i - 2) {
+            curr = curr + 1;
+        }
+        if (index == i - 1) {
+            curr = totals;
+        }
+        if (curr < 1) {
+            curr = 1;
+        }
+        if (curr > totals) {
+            curr = totals;
+        }
+        findByPage(curr);
+    }
+</script>
+</body>
+</html>
