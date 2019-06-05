@@ -189,7 +189,6 @@
 
     </dependencies>
     <build>
-        <finalName>SSM_Demo</finalName>
         <resources>
             <resource>
                 <!--需要打包的目录-->
